@@ -1,0 +1,51 @@
+package com.api.parkingcontrol.services;
+
+import com.api.parkingcontrol.models.ParkingSpotModels;
+import com.api.parkingcontrol.repositories.VagaRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class VagaService {
+    final VagaRepository vagaRepository;
+
+    public VagaService(VagaRepository vagaRepository) {
+        this.vagaRepository = vagaRepository;
+    }
+
+    @Transactional
+    public ParkingSpotModels save(ParkingSpotModels vagaModel) {
+        return vagaRepository.save(vagaModel);
+    }
+
+    public boolean existsByCarroPlaca(String carroPlaca) {
+        return vagaRepository.existsByCarroPlaca(carroPlaca);
+    }
+
+    public boolean existsByNumeroVaga(String numeroVaga) {
+        return vagaRepository.existsByNumeroVaga(numeroVaga);
+    }
+
+    public boolean existsByApartamentoAndBloco(String apartamento, String bloco) {
+        return vagaRepository.existsByApartamentoAndBloco(apartamento, bloco);
+    }
+
+    public Page<ParkingSpotModels> findAll(Pageable pageable) {
+        return vagaRepository.findAll(pageable);
+    }
+
+    public Optional<ParkingSpotModels> findById(UUID id) {
+        return vagaRepository.findById(id);
+    }
+
+    @Transactional
+    public void delete(ParkingSpotModels parkingSpotModel) {
+        vagaRepository.delete(parkingSpotModel);
+    }
+}
